@@ -1,5 +1,5 @@
 import React from 'react'
-import './TodoApp.css';
+import '../../styles/TodoApp.css';
 import {
     AddTaskForm,
     FilterFooter,
@@ -7,7 +7,7 @@ import {
 } from "../";
 
 const TodoApp = () => (
-    <div className="TodoApp">
+    <div className="m-auto max-w-2xl min-h-80">
         <AddTaskForm/>
         <TaskList/>
         <FilterFooter/>
