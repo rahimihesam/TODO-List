@@ -1,9 +1,9 @@
 import React from 'react'
 
-const FilterFooter = () => (
+const FilterFooter = ({tasks}) => (
     <div className="w-full flex bg-green-200 p-3">
         <div className="w-full flex items-center">
-            2 items
+            {tasks.length}
         </div>
         <div className="w-full">
             <ul className="w-full flex items-center justify-end flex-row h-9">

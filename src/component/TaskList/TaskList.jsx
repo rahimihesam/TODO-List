@@ -1,13 +1,10 @@
 import React from 'react'
 import {TaskItem} from "../index";
 
-const TaskList = () => (
+const TaskList = ({tasks , deleteTask}) => (
     <div className="w-full  ">
         <ul>
-            <TaskItem/>
-            <TaskItem/>
-            <TaskItem/>
-            <TaskItem/>
+            {tasks.map((task => <TaskItem task={task} deleteTask={deleteTask}/>))}
         </ul>
     </div>
 )
