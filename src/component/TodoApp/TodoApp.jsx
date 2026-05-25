@@ -9,6 +9,9 @@ import {
 
 const TodoApp = () => {
     const [tasks, setTasks] = useState([]);
+    const [filter, setFilter] = useState('all');
+    const [filteredTasks, setFilteredTasks] = useState([]);
+    const [refreshTasks, setRefreshTasks] = useState(0);
 
     useEffect(() => {
         setTasks([
@@ -26,6 +29,20 @@ const TodoApp = () => {
         ])
     }, [])
 
+    useEffect(() => {
+        if (filter === 'all') {
+            setFilteredTasks(tasks);
+        }
+        if (filter === 'completed') {
+            const newCompletedTasks = tasks.filter(task => task.status)
+            setFilteredTasks(newCompletedTasks);
+        }
+        if (filter === 'active') {
+            const newActiveTasks = tasks.filter(task => !task.status)
+            setFilteredTasks(newActiveTasks);
+        }
+    }, [filter, tasks, refreshTasks]);
+
     const addTask = (taskTitle) => {
         setTasks([...tasks, {
             id: uuidv4(),
@@ -34,18 +51,26 @@ const TodoApp = () => {
         }]);
     }
 
-    function deleteTask(taskId) {
-        let newTasksList = tasks
-        delete newTasksList(tasks.find((task) => task.id === taskId))
-        newTasksList.filter((item) => item)
+    const deleteTask = (taskId) => {
+        let newTasksList = tasks;
+        delete newTasksList(tasks.findIndex((task) => task.id === taskId))
+        newTasksList = newTasksList.filter((item) => item)
         setTasks(newTasksList)
+    }
+
+    const handelChangeStatus = (taskId) => {
+        let newTasksList = tasks;
+        const taskIndex = tasks.findIndex((task) => task.id === taskId);
+        newTasksList = [taskIndex].status = !newTasksList[taskIndex].status;
+        setTasks(newTasksList)
+        setRefreshTasks(refreshTasks + 1)
     }
 
     return (
         <div className="m-auto max-w-2xl min-h-80">
             <AddTaskForm addTask={addTask}/>
-            <TaskList tasks={tasks} deleteTask={{deleteTask}}/>
-            <FilterFooter tasks={tasks}/>
+            <TaskList tasks={filteredTasks} deleteTask={{deleteTask}} handelChangeStatus={handelChangeStatus}/>
+            <FilterFooter updateFilter={setFilter} tasks={filteredTasks}/>
         </div>
     )
 }
