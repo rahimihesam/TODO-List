@@ -1,34 +1,20 @@
-import React, { useState, useReducer } from "react";
-import Form from "./components/Form";
-import "./App.css";
-import TaskList from "./components/TaskList";
-import Counter from "./components/Counter";
-import TaskContext from "./contexts/TaskContext";
-import TaskReducer from "./reducers/Tasks";
+import React from "react";
+import './styles/App.css';
+import './styles/reset.css'
+import {
+    Header,
+    TodoApp,
+    Footer
+} from "./component";
 
-export default function App() {
-  const [tasks, setTasks] = useState([
-    { title: "react", completed: false },
-    { title: "redux", completed: true },
-  ]);
-  // let tasks = JSON.parse(localStorage.getItem("tasks"));
-
-  const [state, dispatch] = useReducer(TaskReducer, {
-    tasks,
-  });
-
+function App() {
   return (
-    <TaskContext.Provider
-      value={{
-        tasks: state.tasks,
-        dispatchTask: dispatch,
-      }}
-    >
-      <div className="todo-list">
-        <Form />
-        <TaskList />
-        <Counter />
+      <div className="App">
+        <Header />
+        <TodoApp/>
+        <Footer/>
       </div>
-    </TaskContext.Provider>
   );
 }
+
+export default App;
